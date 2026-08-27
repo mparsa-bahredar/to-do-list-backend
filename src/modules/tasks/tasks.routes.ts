@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getTasks, getTask, addTask, editTask, removeTask} from "./tasks.controller";
+import {getTasks, getTask, addTask, editTask, toggleTaskStatus, removeTask} from "./tasks.controller";
 
 
 const router = Router();
@@ -11,6 +11,8 @@ router.post("/", addTask);
 
 router.put("/:id", editTask);
 router.patch("/:id", editTask);
+
+router.patch("/:id/toggle", toggleTaskStatus);
 
 router.delete("/:id", removeTask);
 
