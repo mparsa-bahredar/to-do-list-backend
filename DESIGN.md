@@ -24,15 +24,35 @@ Method: DELETE, Success Status: 200, Failure Status: 404
 
 Structure :
 
-TASK (project)/
+express-task (project)/
+
 ---- node_modules/
+
 ---- src/
-    ---- modules/
-    ---- routes/
-    ---- main.ts
+
+  ---- data/
+    ---- tasks.json
+
+  ---- modules/
+    ---- tasks/
+      ---- tasks.service.ts
+      ---- tasks.controller.ts
+      ---- tasks.routes.ts
+  
+  ---- types/
+    ---- types.ts
+
+  ---- main.ts
+  ---- app.ts
+
+---- uploads/
+
 ---- DESIGN.md
+---- RETRO.md
 ---- package-lock.json
 ---- package.json
+
+
 
 
 

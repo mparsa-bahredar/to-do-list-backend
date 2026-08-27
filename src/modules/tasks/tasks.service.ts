@@ -1,29 +1,66 @@
-import { Task } from '../../types/types';
-import fs from 'fs';
-import path from 'path';
+import { Task } from "../../types/types";
 
 
-export let tasks: Task[] = [];
-export let nextId = 1;
-export const getNextId = () => nextId++;
+const tasks: Task[] = [];
 
-
-const dataPath = path.join(__dirname, '../data/tasks.json');
-
-
-export const loadTasks = () => {
-  try {
-    const data = fs.readFileSync(dataPath, 'utf-8');
-    const parsed = JSON.parse(data);
-    tasks = parsed.tasks || [];
-    nextId = parsed.nextId || 1;
-  } catch (error) {
-    tasks = [];
-    nextId = 1;
-  }
+export const getAllTasks = () => {
+  return tasks;
 };
 
-export const saveTasks = () => {
-  const data = JSON.stringify({ tasks, nextId }, null, 2);
-  fs.writeFileSync(dataPath, data, 'utf-8');
+export const getTaskById = (id: number) => {
+  return tasks.find((task) => task.id === id);
+};
+
+export const createTask = (
+  title: string,
+  attachmentPath?: string
+) => {
+  const task: Task = {
+    id: tasks.length + 1,
+    title,
+    completed: false,
+    createdAt: new Date().toISOString(),
+    attachmentPath: attachmentPath ?? null,
+  };
+
+  tasks.push(task);
+
+  return task;
+};
+
+export const updateTask = (
+  id: number,
+  title?: string,
+  completed?: boolean,
+  attachmentPath?: string
+) => {
+  const task = tasks.find((task) => task.id === id);
+
+  if (!task) {
+    return undefined;
+  }
+
+  if (title !== undefined) {
+    task.title = title;
+  }
+
+  if (completed !== undefined) {
+    task.completed = completed;
+  }
+
+  if (attachmentPath !== undefined) {
+    task.attachmentPath = attachmentPath;
+  }
+
+  return task;
+};
+
+export const deleteTask = (id: number) => {
+  const index = tasks.findIndex((task) => task.id === id);
+
+  if (index === -1) {
+    return undefined;
+  }
+
+  return tasks.splice(index, 1)[0];
 };

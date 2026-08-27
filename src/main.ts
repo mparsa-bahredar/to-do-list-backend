@@ -1,8 +1,7 @@
-import express , {Request , Response} from "express"
+import app from "./app";
 
+const PORT = 3000;
 
-const app = express();
-const port = 3000;
-
-app.use(express.json());
-app.use('/files', express.static('uploads'));
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
