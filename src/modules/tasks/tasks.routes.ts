@@ -1,19 +1,19 @@
 import { Router } from "express";
-import {getTasks, getTask, addTask, editTask, toggleTaskStatus, removeTask} from "./tasks.controller";
-
+import { getTasks, getTask, addTask, editTask, toggleTaskStatus, removeTask } from "./tasks.controller";
+import { validateAddTask, validateEditTask, validateGetTask, validateGetTasks, validateToggleTask, validateRemoveTask } from 
+"../../middleware/validator";
 
 const router = Router();
 
-router.get("/", getTasks);
-router.get("/:id", getTask);
+router.get("/", validateGetTasks, getTasks);
+router.get("/:id", validateGetTask, getTask);
 
-router.post("/", addTask);
+router.post("/", validateAddTask, addTask);
 
-router.put("/:id", editTask);
-router.patch("/:id", editTask);
+router.put("/:id", validateEditTask, editTask);
+router.patch("/:id", validateEditTask, editTask);
+router.patch("/:id/toggle", validateToggleTask, toggleTaskStatus);
 
-router.patch("/:id/toggle", toggleTaskStatus);
-
-router.delete("/:id", removeTask);
+router.delete("/:id", validateRemoveTask, removeTask);
 
 export default router;
